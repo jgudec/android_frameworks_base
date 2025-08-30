@@ -194,10 +194,10 @@
     <string name="biometric_dialog_face_icon_description_confirmed" msgid="7918067993953940778">"Confirmed"</string>
     <string name="biometric_dialog_tap_confirm" msgid="9166350738859143358">"Tap Confirm to complete"</string>
     <string name="biometric_dialog_tap_confirm_with_face" msgid="2378151312221818694">"Unlocked by face"</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"Unlocked by face. Press to continue."</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_2" msgid="8586608186457385108">"Face recognised. Press to continue."</string>
-    <string name="biometric_dialog_tap_confirm_with_face_alt_3" msgid="2192670471930606539">"Face recognised. Press the unlock icon to continue."</string>
-    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"Unlocked by face. Tap to continue."</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_1" msgid="439152621640507113">"Unlocked by face."</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_2" msgid="8586608186457385108">"Face recognised."</string>
+    <string name="biometric_dialog_tap_confirm_with_face_alt_3" msgid="2192670471930606539">"Face recognised."</string>
+    <string name="biometric_dialog_tap_confirm_with_face_sfps" msgid="2499213248903257928">"Unlocked by face."</string>
     <string name="biometric_dialog_authenticated" msgid="7337147327545272484">"Authenticated"</string>
     <string name="biometric_dialog_cancel_authentication" msgid="981316588773442637">"Cancel authentication"</string>
     <string name="biometric_dialog_content_view_more_options_button" msgid="2663810393874865475">"More options"</string>
@@ -1329,7 +1329,7 @@
     <string name="accessibility_authenticate_hint" msgid="798914151813205721">"Authenticate"</string>
     <string name="accessibility_enter_hint" msgid="2617864063504824834">"enter device"</string>
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"Use fingerprint to open"</string>
-    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Authentication required. Touch the fingerprint sensor to authenticate."</string>
+    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Touch the fingerprint sensor to authenticate."</string>
     <string name="resume_animation" msgid="9148788411429330671">"Resume animation"</string>
     <string name="pause_animation" msgid="1919705510058107504">"Pause animation"</string>
     <string name="ongoing_call_content_description" msgid="6394763878322348560">"Ongoing call"</string>

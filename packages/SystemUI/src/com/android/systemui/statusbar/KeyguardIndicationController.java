@@ -222,20 +222,14 @@ public class KeyguardIndicationController {
     /** Whether the battery defender is triggered with the device plugged. */
     private boolean mEnableBatteryDefender;
     private boolean mIncompatibleCharger;
-    private float mChargingWattage;
     private int mBatteryLevel = -1;
     private boolean mBatteryPresent = true;
     protected long mChargingTimeRemaining;
-    private float mChargingCurrent;
-    private float mChargingVoltage;
     private float mTemperature;
     private Pair<String, BiometricSourceType> mBiometricErrorMessageToShowOnScreenOn;
     private Set<Integer> mCoExFaceAcquisitionMsgIdsToShow;
     private final FaceHelpMessageDeferral mFaceAcquiredMessageDeferral;
     private boolean mInited;
-
-    private int mCurrentDivider;
-
     private boolean mHasDashCharger;
     private boolean mHasWarpCharger;
     private boolean mHasVoocCharger;
@@ -411,8 +405,6 @@ public class KeyguardIndicationController {
         mKeyguardStateController.addCallback(mKeyguardStateCallback);
 
         mStatusBarStateListener.onDozingChanged(mStatusBarStateController.isDozing());
-
-        mCurrentDivider = mContext.getResources().getInteger(R.integer.config_currentInfoDivider);
 
         mAlternateFastchargeInfoUpdate =
                     mContext.getResources().getBoolean(R.bool.config_alternateFastchargeInfoUpdate);
@@ -670,10 +662,7 @@ public class KeyguardIndicationController {
     private void updateLockScreenBatteryMsg(boolean animate) {
         if (mBatteryPresent && (mPowerPluggedIn || mEnableBatteryDefender)) {
             String powerIndication = computePowerIndication();
-            if (DEBUG_CHARGING_SPEED) {
-                powerIndication += ",  " + (mChargingWattage / mCurrentDivider) + " mW";
-            }
-
+           
             mKeyguardLogger.logUpdateBatteryIndication(powerIndication, mPowerPluggedIn);
             mRotateTextViewController.updateIndication(
                     INDICATION_TYPE_BATTERY,
@@ -1223,25 +1212,12 @@ public class KeyguardIndicationController {
         boolean showbatteryInfo = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LOCKSCREEN_BATTERY_INFO, 1, UserHandle.USER_CURRENT) == 1;
          if (showbatteryInfo) {
-            if (mChargingCurrent >= mCurrentDivider * 1000) {
-                batteryInfo = String.format("%.1f" , (mChargingCurrent / mCurrentDivider / 1000)) + "A";
-            } else if (mChargingCurrent > 0) {
-                batteryInfo = String.format("%.0f" , (mChargingCurrent / mCurrentDivider)) + "mA";
-            }
-            if (mChargingWattage > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        String.format("%.1f" , (mChargingWattage / mCurrentDivider / 1000)) + "W";
-            }
-            if (mChargingVoltage > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        String.format("%.1f", (mChargingVoltage / 1000 / 1000)) + "V";
-            }
             if (mTemperature > 0) {
                 batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
                         String.format("%.1f", (mTemperature / 10)) + "°C";
             }
             if (batteryInfo != "") {
-                batteryInfo = "\n" + batteryInfo;
+                batteryInfo = " · " + batteryInfo;
             }
         }
 
@@ -1344,7 +1320,6 @@ public class KeyguardIndicationController {
         pw.println("  mPowerPluggedIn: " + mPowerPluggedIn);
         pw.println("  mPowerCharged: " + mPowerCharged);
         pw.println("  mChargingSpeed: " + mChargingSpeed);
-        pw.println("  mChargingWattage: " + mChargingWattage);
         pw.println("  mChargingStatus: " + mChargingStatus);
         pw.println("  mMessageToShowOnScreenOn: " + mBiometricErrorMessageToShowOnScreenOn);
         pw.println("  mDozing: " + mDozing);
@@ -1415,9 +1390,6 @@ public class KeyguardIndicationController {
             mPowerPluggedInDock = status.isPluggedInDock() && isChargingOrFull;
             mPowerPluggedIn = isPowerPluggedIn(status, isChargingOrFull);
             mPowerCharged = status.isCharged();
-            mChargingCurrent = status.maxChargingCurrent;
-            mChargingVoltage = status.maxChargingVoltage;
-            mChargingWattage = status.maxChargingWattage;
             mChargingSpeed = status.getChargingSpeed(mContext);
             mChargingStatus = status.chargingStatus;
             mBatteryLevel = status.level;
